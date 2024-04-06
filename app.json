@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "breathe-bookkeeping",
+    "slug": "breathe-bookkeeping",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "aa19d282-bbec-4788-9f2a-b446580067b8"
+      }
+    },
+    "owner": "hqwuzhaoyi"
   }
 }
