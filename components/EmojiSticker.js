@@ -1,14 +1,14 @@
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text } from "react-native";
+import Animated from "react-native-reanimated";
 
 export default function EmojiSticker({ imageSize, stickerSource }) {
   return (
     <View style={{ top: -350 }}>
-      {/* <Image
+      <Animated.Image
         source={stickerSource}
         resizeMode="contain"
         style={{ width: imageSize, height: imageSize }}
-      /> */}
-      <Text style={{ fontSize: 20, textAlign: 'center' }}>{stickerSource}</Text>
+      />
     </View>
   );
 }
