@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#25292e"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -31,6 +31,9 @@
         "projectId": "aa19d282-bbec-4788-9f2a-b446580067b8"
       }
     },
-    "owner": "hqwuzhaoyi"
+    "owner": "hqwuzhaoyi",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
