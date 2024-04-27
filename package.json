@@ -1,9 +1,9 @@
 {
   "name": "echo-books",
-  "main": "index.js",
+  "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "dev": "expo start",
+    "dev": "expo start -c",
     "dev:web": "expo start -c --web",
     "dev:android": "expo start -c --android",
     "android": "expo start -c --android",
