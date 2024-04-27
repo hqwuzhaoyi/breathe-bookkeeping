@@ -15,6 +15,12 @@ import { captureRef } from "react-native-view-shot";
 import { useRef } from "react";
 import domtoimage from "dom-to-image";
 
+// import * as SplashScreen from 'expo-splash-screen';
+// SplashScreen.preventAutoHideAsync();
+// setTimeout(SplashScreen.hideAsync, 5000);
+
+
+
 const PlaceholderImage = require("./assets/images/background-image.png");
 
 export default function App() {
