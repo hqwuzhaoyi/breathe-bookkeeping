@@ -26,6 +26,9 @@ dependencies:
   expo:
     specifier: ~50.0.14
     version: 50.0.17(@babel/core@7.24.4)(@react-native/babel-preset@0.74.81)
+  expo-av:
+    specifier: ^13.10.6
+    version: 13.10.6(expo@50.0.17)
   expo-linking:
     specifier: ~6.2.2
     version: 6.2.2(expo@50.0.17)
@@ -83,6 +86,9 @@ dependencies:
   tailwindcss-animate:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.4.3)
+  whisper.rn:
+    specifier: ^0.3.9
+    version: 0.3.9(react-native@0.73.6)(react@18.2.0)
   zustand:
     specifier: ^4.4.7
     version: 4.5.2(@types/react@18.2.79)(react@18.2.0)
@@ -5096,6 +5102,14 @@ packages:
       - supports-color
     dev: false
 
+  /expo-av@13.10.6(expo@50.0.17):
+    resolution: {integrity: sha512-h3c1fg5yhWnP0RIGO+fhgPx6cmh4B4lnKdXR2i69aC3vs5D5Cu+JlzBon1gLIu6eUo2IVfC0RjSLpfQbcJ4doQ==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 50.0.17(@babel/core@7.24.4)(@react-native/babel-preset@0.74.81)
+    dev: false
+
   /expo-constants@15.4.6(expo@50.0.17):
     resolution: {integrity: sha512-vizE69dww2Vl0PTWWvDmK0Jo2/J+WzdcMZlA05YEnEYofQuhKxTVsiuipf79mSOmFavt4UQYC1UnzptzKyfmiQ==}
     peerDependencies:
@@ -9265,6 +9279,17 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+    dev: false
+
+  /whisper.rn@0.3.9(react-native@0.73.6)(react@18.2.0):
+    resolution: {integrity: sha512-y2hsJ6IpUqtYUZA7YrtGqU3pTXNFzF8Piu8Ch4yAhBB6tyZcEl113e/X10xkd+bVfeIbrSZS2QJZQ4CBfbXS3g==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.73.6(@babel/core@7.24.4)(react@18.2.0)
     dev: false
 
   /wonka@4.0.15:
