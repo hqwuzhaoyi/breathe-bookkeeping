@@ -21,13 +21,15 @@
         "UIBackgroundModes": [
           "audio"
         ]
-      }
+      },
+      "bundleIdentifier": "com.hqwuzhaoyi.echobooks"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hqwuzhaoyi.echobooks"
     },
     "web": {
       "bundler": "metro",

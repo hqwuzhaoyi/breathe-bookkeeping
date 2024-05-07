@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, StyleSheet, Button } from "react-native";
 import { Audio } from "expo-av";
+import { initWhisper } from "whisper.rn";
 
 export default function App() {
   const [recording, setRecording] = useState<Audio.Recording>();
@@ -53,6 +54,20 @@ export default function App() {
 
     console.log("Playback started");
     await sound.playAsync();
+
+    const whisperContext = await initWhisper({
+      filePath: "file://.../ggml-tiny.en.bin",
+    });
+
+    const sampleFilePath = uri;
+    const options = { language: "en" };
+    const { stop, promise } = whisperContext.transcribe(
+      sampleFilePath,
+      options
+    );
+
+    const { result } = await promise;
+    console.log("Transcription result:", result);
   }
 
   return (
