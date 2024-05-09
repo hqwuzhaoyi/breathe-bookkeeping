@@ -3,6 +3,7 @@
     "name": "Echo Books",
     "slug": "echo-books",
     "version": "1.0.0",
+    "platforms": ["android", "ios"],
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -20,7 +21,8 @@
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
-        ]
+        ],
+        "NSMicrophoneUsageDescription": "This app uses the microphone to record audio."
       },
       "bundleIdentifier": "com.hqwuzhaoyi.echobooks"
     },
