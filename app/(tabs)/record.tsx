@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, StyleSheet, Button } from "react-native";
 import { Audio } from "expo-av";
-import { initWhisper } from "whisper.rn";
+import * as FileSystem from "expo-file-system";
 
 export default function App() {
   const [recording, setRecording] = useState<Audio.Recording>();
@@ -54,20 +54,36 @@ export default function App() {
 
     console.log("Playback started");
     await sound.playAsync();
+    uploadAudioForRecognition(uri);
+  }
 
-    const whisperContext = await initWhisper({
-      filePath: "file://.../ggml-tiny.en.bin",
-    });
+  async function uploadAudioForRecognition(audioUri: string) {
+    try {
+      const fileInfo = await FileSystem.getInfoAsync(audioUri);
+      const fileBlob = await FileSystem.readAsStringAsync(audioUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+      const blob = new Blob([fileBlob], { type: "audio/mpeg" });
 
-    const sampleFilePath = uri;
-    const options = { language: "en" };
-    const { stop, promise } = whisperContext.transcribe(
-      sampleFilePath,
-      options
-    );
+      const formData = new FormData();
+      formData.append("file", blob, "recording.mp3");
 
-    const { result } = await promise;
-    console.log("Transcription result:", result);
+      const response = await fetch(
+        "https://api.speech-to-text-service.com/v1/recognize",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: "Bearer " + process.env.EXPO_PUBLIC_OPEN_API_TOKEN, // 使用你的 API 密钥
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const result = await response.json();
+      console.log("Recognition result:", result);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
   }
 
   return (

@@ -19,6 +19,7 @@
     "clsx": "^2.1.0",
     "expo": "~50.0.14",
     "expo-av": "^13.10.6",
+    "expo-file-system": "^17.0.1",
     "expo-linking": "~6.2.2",
     "expo-navigation-bar": "~2.8.1",
     "expo-router": "~3.4.8",

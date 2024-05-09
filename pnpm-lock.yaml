@@ -29,6 +29,9 @@ dependencies:
   expo-av:
     specifier: ^13.10.6
     version: 13.10.6(expo@50.0.17)
+  expo-file-system:
+    specifier: ^17.0.1
+    version: 17.0.1(expo@50.0.17)
   expo-linking:
     specifier: ~6.2.2
     version: 6.2.2(expo@50.0.17)
@@ -5123,6 +5126,14 @@ packages:
 
   /expo-file-system@16.0.9(expo@50.0.17):
     resolution: {integrity: sha512-3gRPvKVv7/Y7AdD9eHMIdfg5YbUn2zbwKofjsloTI5sEC57SLUFJtbLvUCz9Pk63DaSQ7WIE1JM0EASyvuPbuw==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 50.0.17(@babel/core@7.24.4)(@react-native/babel-preset@0.74.81)
+    dev: false
+
+  /expo-file-system@17.0.1(expo@50.0.17):
+    resolution: {integrity: sha512-dYpnZJqTGj6HCYJyXAgpFkQWsiCH3HY1ek2cFZVHFoEc5tLz9gmdEgTF6nFHurvmvfmXqxi7a5CXyVm0aFYJBw==}
     peerDependencies:
       expo: '*'
     dependencies:
