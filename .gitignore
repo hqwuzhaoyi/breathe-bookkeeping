@@ -42,3 +42,7 @@ expo-env.d.ts
 
 ios/
 android/
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

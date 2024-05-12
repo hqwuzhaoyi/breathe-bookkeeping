@@ -8,7 +8,9 @@
     "dev:android": "expo start -c --android",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start -c --web"
+    "web": "expo start -c --web",
+    "env:push": "npx dotenv-vault@latest push",
+    "env:pull": "npx dotenv-vault@latest pull"
   },
   "dependencies": {
     "@radix-ui/react-progress": "^1.0.3",
@@ -17,6 +19,7 @@
     "@react-navigation/native": "^6.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dotenv": "^16.4.5",
     "expo": "~50.0.14",
     "expo-av": "^13.10.6",
     "expo-file-system": "^17.0.1",

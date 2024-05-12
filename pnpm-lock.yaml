@@ -23,6 +23,9 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.1
+  dotenv:
+    specifier: ^16.4.5
+    version: 16.4.5
   expo:
     specifier: ~50.0.14
     version: 50.0.17(@babel/core@7.24.4)(@react-native/babel-preset@0.74.81)
