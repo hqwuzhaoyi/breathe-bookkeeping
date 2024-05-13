@@ -3,6 +3,9 @@ import { View, StyleSheet, Button } from "react-native";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 
+const openAIEndpoint = "https://api.openai.com/v1/audio/transcriptions";
+const apiKey = process.env.EXPO_PUBLIC_OPEN_API_TOKEN;
+
 export default function App() {
   const [recording, setRecording] = useState<Audio.Recording>();
   const [permissionResponse, requestPermission] = Audio.usePermissions();
@@ -44,7 +47,7 @@ export default function App() {
     uri && setRecordURI(uri);
   }
 
-  async function playSound(uri) {
+  async function playSound(uri: string) {
     console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(
       { uri: uri },
@@ -57,32 +60,32 @@ export default function App() {
     uploadAudioForRecognition(uri);
   }
 
+  function base64ToBlob(base64: string, type: string) {
+    return fetch(`data:${type};base64,${base64}`).then((res) => res.blob());
+  }
+
   async function uploadAudioForRecognition(audioUri: string) {
     try {
-      const fileInfo = await FileSystem.getInfoAsync(audioUri);
-      const fileBlob = await FileSystem.readAsStringAsync(audioUri, {
-        encoding: FileSystem.EncodingType.Base64,
+      const response = await FileSystem.uploadAsync(openAIEndpoint, audioUri, {
+        // Optional: Additional HTTP headers to send with the request.
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          // any other headers your endpoint requires
+        },
+
+        // Options specifying how to upload the file.
+        httpMethod: "POST",
+        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+        fieldName: "file", // Name of the field for the uploaded file
+        mimeType: "audio/mpeg", // MIME type of the uploading file
+        parameters: {
+          // Optional: Any additional parameters you want to send with the file upload
+          model: "whisper-1", // For example, if you're using OpenAI's model parameter
+        },
       });
-      const blob = new Blob([fileBlob], { type: "audio/mpeg" });
-
-      const formData = new FormData();
-      formData.append("file", blob, "recording.mp3");
-
-      const response = await fetch(
-        "https://api.speech-to-text-service.com/v1/recognize",
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: "Bearer " + process.env.EXPO_PUBLIC_OPEN_API_TOKEN, // 使用你的 API 密钥
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      const result = await response.json();
-      console.log("Recognition result:", result);
+      console.log("Response", JSON.parse(response.body).text);
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.error("Failed to upload audio", error);
     }
   }
 
