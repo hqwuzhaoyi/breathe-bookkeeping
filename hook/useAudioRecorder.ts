@@ -93,12 +93,51 @@ const useAudioRecorder = ({
           }
         );
         console.log("Response", JSON.parse(response.body).text);
+        const text = await analyzeText(JSON.parse(response.body).text);
+        console.log("Analyzed text:", text);
       } catch (error) {
         console.error("Failed to upload audio", error);
       }
     },
     [openAIEndpoint, apiKey]
   );
+
+  const analyzeText = async (text: string) => {
+    const requestBody = {
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a helpful assistant. When a user mentions purchases, analyze the conversation and extract the amount of money spent, the purpose of the expense, and the category. Return the information in the format: {money: amount, purpose: 'purpose', category: 'category'}.",
+        },
+        {
+          role: "user",
+          content: text,
+        },
+      ],
+    };
+
+    try {
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      const data = await response.json();
+      return data.choices[0].message.content; // 注意处理返回数据的具体结构
+    } catch (error) {
+      console.error("Error calling OpenAI API:", error);
+      return null;
+    }
+  };
 
   return {
     startRecording,
