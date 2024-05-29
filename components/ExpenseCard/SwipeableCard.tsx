@@ -18,7 +18,7 @@ const SwipeableCard = ({ children, onEdit, onDelete }) => {
       if (translateX.value < -100) {
         translateX.value = withSpring(-120);
       } else {
-        translateX.value = withSpring(0);
+        translateX.value = withSpring(50);
       }
     });
 
