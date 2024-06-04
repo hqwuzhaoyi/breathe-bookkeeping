@@ -8,7 +8,7 @@ import Animated, {
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 
 const SwipeableCard = ({ children, onEdit, onDelete }) => {
-  const translateX = useSharedValue(0);
+  const translateX = useSharedValue(50);
 
   const panGesture = Gesture.Pan()
     .onUpdate((event) => {
@@ -16,7 +16,7 @@ const SwipeableCard = ({ children, onEdit, onDelete }) => {
     })
     .onEnd(() => {
       if (translateX.value < -100) {
-        translateX.value = withSpring(-120);
+        translateX.value = withSpring(-70);
       } else {
         translateX.value = withSpring(50);
       }
