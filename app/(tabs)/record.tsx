@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { View, StyleSheet, Button, Text } from "react-native";
-import { Audio } from "expo-av";
-import * as FileSystem from "expo-file-system";
+import { View, StyleSheet } from "react-native";
 import useAudioRecorder from "~/hook/useAudioRecorder";
 import ExpenseCard from "~/components/ExpenseCard";
 import {
@@ -11,7 +9,8 @@ import {
 } from "react-native-gesture-handler";
 import AppleStyleSwipeableRow from "~/components/swipeable/AppleStyleSwipeableRow";
 import GmailStyleSwipeableRow from "~/components/swipeable/GmailStyleSwipeableRow";
-import { Card } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
 
 const openAIEndpoint = "https://api.openai.com/v1/audio/transcriptions";
 const apiKey = process.env.EXPO_PUBLIC_OPEN_API_TOKEN;
@@ -50,21 +49,27 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View>
-        <Button title="Start Recording" onPress={startRecording} />
-        <Button title="Stop Recording" onPress={stopRecording} />
+        <Button onPress={startRecording}>
+          <Text>Start Recording</Text>
+        </Button>
+        <Button onPress={stopRecording}>
+          <Text>Stop Recording</Text>
+        </Button>
         {recordURI && (
-          <Button title="Play Sound" onPress={() => playSound(recordURI)} />
+          <Button onPress={() => playSound(recordURI)}>
+            <Text>Play Sound</Text>
+          </Button>
         )}
-        <Card className="w-auto m-2 rounded-md overflow-hidden">
-          <FlatList
-            data={DATA}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item, index }) => (
-              <SwipeableRow item={item} index={index} />
-            )}
-            keyExtractor={(_item, index) => `message ${index}`}
-          />
-        </Card>
+        <View className="flex flex-col gap-4 p-4">
+          {[1, 2, 3].map((_, index) => (
+            <ExpenseCard key={index} />
+          ))}
+        </View>
+      </View>
+      <View className="fixed bottom-10 left-0 right-0 p-4 bg-white shadow-md">
+        <Button onPress={startRecording} variant="secondary">
+          <Text>Start Recording</Text>
+        </Button>
       </View>
     </GestureHandlerRootView>
   );
