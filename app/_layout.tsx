@@ -2,7 +2,7 @@ import "~/global.css";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Theme, ThemeProvider } from "@react-navigation/native";
-import { SplashScreen, Stack } from "expo-router";
+import { Link, SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -61,9 +61,12 @@ export default function RootLayout() {
     return null;
   }
 
+  console.log("isDarkColorScheme", isDarkColorScheme);
+
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+
       <Stack>
         {/* <Stack.Screen
           name='index'
@@ -73,6 +76,14 @@ export default function RootLayout() {
           }}
         /> */}
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
+        <Stack.Screen
+          name="modal"
+          options={{
+            // Set the presentation mode to modal for our modal route.
+            presentation: "modal",
+          }}
+        />
       </Stack>
       <PortalHost />
     </ThemeProvider>
