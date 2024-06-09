@@ -1,33 +1,40 @@
-import { CherryIcon } from "lucide-react-native";
-import React from "react";
+import { CherryIcon, LucideProps } from "lucide-react-native";
+import React, { useState } from "react";
 import { View } from "react-native";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Card, CardDescription, CardTitle } from "~/components/ui/card";
 
-function AppleIcon(props) {
-  return <CherryIcon {...props}/>;
+function AppleIcon(props: React.JSX.IntrinsicAttributes & LucideProps) {
+  return <CherryIcon {...props} color={props.color ?? "black"} />;
 }
 
-const ExpenseCard = () => {
+const ExpenseCard: React.FC<{
+  onLongPress?: () => void;
+  onPress?: () => void;
+}> = ({ onLongPress, onPress }) => {
+  const [result, setResult] = useState("🔮");
+
   return (
-    <Card className="w-full max-w-sm p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-      <View className="flex items-center gap-4 flex-row">
-        <AppleIcon className="w-12 h-12 text-primary" />
-        <View className="flex-1">
-          <CardTitle className="text-lg font-semibold">餐饮</CardTitle>
-          <CardDescription className="text-sm text-gray-500 dark:text-gray-400">
-            Expires in 3 days
-          </CardDescription>
+    <TouchableOpacity
+      onLongPress={() => {
+        onLongPress && onLongPress();
+      }}
+      onPress={() => {
+        onPress && onPress();
+      }}
+    >
+      <Card className="w-full max-w-sm p-4 rounded-lg shadow-md">
+        <View className="flex items-center gap-4 flex-row">
+          <AppleIcon className="w-12 h-12 text-primary" />
+          <View className="flex-1">
+            <CardTitle className="text-lg font-semibold">餐饮</CardTitle>
+            <CardDescription className="text-sm text-gray-500 dark:text-gray-400">
+              Expires in 3 days
+            </CardDescription>
+          </View>
         </View>
-      </View>
-    </Card>
+      </Card>
+    </TouchableOpacity>
   );
 };
 
