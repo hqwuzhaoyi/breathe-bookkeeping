@@ -1,57 +1,24 @@
-import { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import useAudioRecorder from "~/hook/useAudioRecorder";
 import ExpenseCard from "~/components/ExpenseCard";
-import {
-  FlatList,
-  GestureHandlerRootView,
-  RectButton,
-} from "react-native-gesture-handler";
-import AppleStyleSwipeableRow from "~/components/swipeable/AppleStyleSwipeableRow";
-import GmailStyleSwipeableRow from "~/components/swipeable/GmailStyleSwipeableRow";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
+import { Mic, Pause } from "lucide-react-native";
+import { useState } from "react";
+import clsx from "clsx";
 
 const openAIEndpoint = "https://api.openai.com/v1/audio/transcriptions";
 const apiKey = process.env.EXPO_PUBLIC_OPEN_API_TOKEN;
 
-const Row = ({ item }: { item: DataRow }) => (
-  // eslint-disable-next-line no-alert
-  <RectButton style={styles.rectButton} onPress={() => window.alert(item.from)}>
-    <Text style={styles.fromText}>{item.from}</Text>
-    <Text numberOfLines={2} style={styles.messageText}>
-      {item.message}
-    </Text>
-    <Text style={styles.dateText}>{item.when} ❭</Text>
-  </RectButton>
-);
-
-const SwipeableRow = ({ item, index }: { item: DataRow; index: number }) => {
-  if (index % 2 === 0) {
-    return (
-      <AppleStyleSwipeableRow>
-        <Row item={item} />
-      </AppleStyleSwipeableRow>
-    );
-  } else {
-    return (
-      <GmailStyleSwipeableRow>
-        <Row item={item} />
-      </GmailStyleSwipeableRow>
-    );
-  }
-};
-
 export default function App() {
+  const [isRecording, setIsRecording] = useState(false);
   const { startRecording, stopRecording, playSound, recordURI } =
     useAudioRecorder({ openAIEndpoint, apiKey });
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View>
-        <Button onPress={startRecording}>
-          <Text>Start Recording</Text>
-        </Button>
         <Button onPress={stopRecording}>
           <Text>Stop Recording</Text>
         </Button>
@@ -66,9 +33,27 @@ export default function App() {
           ))}
         </View>
       </View>
-      <View className="fixed bottom-10 left-0 right-0 p-4 bg-white shadow-md">
-        <Button onPress={startRecording} variant="secondary">
-          <Text>Start Recording</Text>
+      <View className="fixed bottom-[15vh] right-6">
+        <Button
+          className={clsx(
+            "rounded-full p-3 shadow-lg size-20",
+            isRecording && "bg-red-500"
+          )}
+          onPress={() => {
+            if (isRecording) {
+              stopRecording();
+              setIsRecording(false);
+              return;
+            }
+            startRecording();
+            setIsRecording(true);
+          }}
+        >
+          {isRecording ? (
+            <Pause className="color-white" />
+          ) : (
+            <Mic className="color-white" />
+          )}
         </Button>
       </View>
     </GestureHandlerRootView>
