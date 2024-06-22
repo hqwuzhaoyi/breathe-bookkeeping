@@ -2,7 +2,13 @@ import React, { useMemo, useRef } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import BottomSheet from "@gorhom/bottom-sheet";
 
-const MyBottomSheet = ({ isVisible, onClose }) => {
+const MyBottomSheet = ({
+  isVisible,
+  onClose,
+}: {
+  isVisible: boolean;
+  onClose: () => void;
+}) => {
   // 创建一个 ref 来管理 bottom sheet 的状态
   const bottomSheetRef = useRef(null);
 
