@@ -17,8 +17,12 @@ export const EmojiSelector = () => {
   const renderItem = ({ item }: { item: FoodEmoji }) => (
     <View className={clsx("px-2 py-1 m-1")}>
       <Card>
-        <View className="text-3xl w-16 h-16 rounded-lg justify-center items-center">
-          {item.emoji}
+        <View
+          className={clsx(
+            "text-3xl w-16 h-16 rounded-lg justify-center items-center"
+          )}
+        >
+          <Text> {item.emoji}</Text>
         </View>
       </Card>
       <CardTitle className="text-xs text-center  pt-2">{item.name}</CardTitle>

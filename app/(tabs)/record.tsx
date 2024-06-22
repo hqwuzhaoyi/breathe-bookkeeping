@@ -46,8 +46,14 @@ export default function Record() {
           ))}
         </View>
       </View>
-      <Button onPress={() => setIsVisible(true)}>
-        <Link href="/modal">Present modal</Link>
+      <Button
+        onPress={() => {
+          // setIsVisible(true);
+          router.push("/modal");
+        }}
+        variant="default"
+      >
+        <Text>Present modal</Text>
       </Button>
       <MyBottomSheet
         isVisible={isVisible}

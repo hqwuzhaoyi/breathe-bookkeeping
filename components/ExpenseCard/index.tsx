@@ -15,8 +15,6 @@ const ExpenseCard: React.FC<{
 }> = ({ onLongPress, onPress }) => {
   const [result, setResult] = useState("🔮");
 
-  console.log("result", result);
-
   return (
     // <TouchableOpacity
     //   onLongPress={() => {
