@@ -7,6 +7,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 export const DatePicker = (props: {
   onChange: (event: any, selectedDate: Date) => void;
   value: Date;
+  className?: string;
 }) => {
   const [date, setDate] = useState(props.value);
   const [show, setShow] = useState(false);
@@ -24,7 +25,11 @@ export const DatePicker = (props: {
 
   return (
     <SafeAreaView>
-      <Button onPress={showDatepicker} variant="secondary">
+      <Button
+        onPress={showDatepicker}
+        variant="secondary"
+        className={props.className}
+      >
         <Text>
           {date.toLocaleDateString("zh-CN", {
             year: "numeric",

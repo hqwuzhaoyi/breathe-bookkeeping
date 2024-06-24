@@ -65,9 +65,9 @@ export const EmojiSelector = () => {
         />
       </View>
 
-      <View style={styles.sheetModalContainer}>
-        <Button onPress={handlePresentModalPress} variant="secondary">
-          <Text>设置日期111</Text>
+      <View style={styles.sheetModalView}>
+        <Button onPress={handlePresentModalPress}>
+          <Text>打开 BottomSheetModal</Text>
         </Button>
         <BottomSheetModal
           ref={bottomSheetModalRef}
@@ -76,25 +76,28 @@ export const EmojiSelector = () => {
           onChange={handleSheetChanges}
         >
           <BottomSheetView style={styles.sheetModalContentContainer}>
-            <DatePicker
-              value={new Date()}
-              onChange={(event, selectedDate) => {
-                console.log("selectedDate", selectedDate);
-              }}
-            />
-            <Text>或者</Text>
-            <Input
-              placeholder="Write some stuff..."
-              value={countDown.toString()}
-              onChangeText={(text) => {
-                setCountDown(parseInt(text));
-              }}
-              aria-labelledbyledBy="inputLabel"
-              aria-errormessage="inputError"
-              keyboardType="number-pad"
-              className="bg-gray-100 border-none rounded-lg p-2 w-1/2 p"
-              style={styles.inputNumber}
-            />
+            <View className="flex flex-row items-center gap-2">
+              <View className="flex-1">
+                <DatePicker
+                  value={new Date()}
+                  onChange={(event, selectedDate) => {
+                    console.log("selectedDate", selectedDate);
+                  }}
+                  className="bg-secondary  border-none rounded-md px-4 py-2 mt-2"
+                />
+              </View>
+              <Text>或者</Text>
+              <View>
+                <Input
+                  placeholder="Write some stuff..."
+                  value={countDown.toString()}
+                  onChangeText={(text) => setCountDown(parseInt(text, 10))}
+                  keyboardType="number-pad"
+                  // style={styles.inputNumber}
+                  className="w-1/2 bg-secondary  border-none rounded-md px-4 py-2 mt-2 focus-visible:!shadow-none"
+                />
+              </View>
+            </View>
           </BottomSheetView>
         </BottomSheetModal>
       </View>
@@ -133,17 +136,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center",
   },
-  sheetModalContainer: {
-    padding: 10,
+  sheetModalView: {
+    flex: 1,
     justifyContent: "center",
+    alignItems: "center",
   },
   sheetModalContentContainer: {
     flex: 1,
     alignItems: "center",
+    paddingTop: 20,
   },
   inputNumber: {
-    width: 100,
-    borderWidth: 0,
+    backgroundColor: "hsl(var(--secondary))", // 灰色背景
+    borderWidth: 0, // 无边框
+    borderRadius: 100, // 轻微圆角
+    padding: 10, // 内边距
+    width: "50%", // 宽度为父容器的一半
+    marginTop: 10, // 上边距
   },
 });
 
