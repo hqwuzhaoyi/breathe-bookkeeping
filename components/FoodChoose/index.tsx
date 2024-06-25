@@ -12,6 +12,8 @@ import { Button } from "~/components/ui/button";
 import { FlatList } from "react-native-gesture-handler";
 import { DatePicker } from "../ui/date-picker";
 import { Input } from "../ui/input";
+// import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 
 const screenWidth = Dimensions.get("window").width;
 const numColumns = 4; // 每行四个
@@ -76,6 +78,33 @@ export const EmojiSelector = () => {
           onChange={handleSheetChanges}
         >
           <BottomSheetView style={styles.sheetModalContentContainer}>
+            <View className="grid sm:grid-cols-2 gap-0">
+              <View className="bg-background p-6">
+                {/* <DateTimePicker
+                  testID="dateTimePicker"
+                  value={new Date()}
+                  mode={"date"}
+                  is24Hour={true}
+                  // onChange={onChange}
+                /> */}
+              </View>
+              <View className="bg-muted p-6 flex flex-col items-center justify-center gap-4">
+                <View className="grid gap-2 w-full">
+                  <Text>Countdown (seconds)</Text>
+                  <Input
+                    placeholder="Write some stuff..."
+                    value={countDown.toString()}
+                    onChangeText={(text) => setCountDown(parseInt(text, 10))}
+                    keyboardType="number-pad"
+                    // style={styles.inputNumber}
+                    className="w-1/2 bg-secondary rounded-md px-4 py-2 mt-2"
+                  />
+                </View>
+                <Button size="lg" variant="default">
+                  Start Countdown
+                </Button>
+              </View>
+            </View>
             <View className="flex flex-row items-center gap-2">
               <View className="flex-1">
                 <DatePicker
