@@ -12,7 +12,11 @@ export default function Modal() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <EmojiSelector />
+        <EmojiSelector
+          onConfirm={(countDown) => {
+            console.log(countDown);
+          }}
+        />
 
         <StatusBar style="light" />
       </View>

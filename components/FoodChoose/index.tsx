@@ -25,7 +25,12 @@ interface FoodEmoji {
   emoji: string;
 }
 
-export const EmojiSelector = () => {
+export const EmojiSelector = ({
+  onConfirm,
+}: {
+  onConfirm: (countDown: number) => void;
+}) => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [countDown, setCountDown] = useState(7);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -40,6 +45,17 @@ export const EmojiSelector = () => {
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
+
+  const handleDateChange = (event: any, date?: Date) => {
+    date = date || selectedDate; // If user cancels the picker, fallback to the current stored date
+    setSelectedDate(date); // Update the selected date state
+
+    const now = new Date();
+    const timeDiff = date.getTime() - now.getTime();
+    const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    setCountDown(days > 0 ? days : 0);
+  };
 
   const renderItem = ({ item }: { item: FoodEmoji }) => (
     <View className={clsx("px-2 py-1 m-1")}>
@@ -79,18 +95,26 @@ export const EmojiSelector = () => {
           onChange={handleSheetChanges}
         >
           <BottomSheetView style={styles.sheetModalContentContainer}>
-            <Button variant="default" size='lg' className="w-3/4">
+            <Button
+              variant="default"
+              size="lg"
+              className="w-3/4"
+              onPress={() => {
+                console.log("Start Countdown");
+                onConfirm(countDown);
+              }}
+            >
               <Text>Start Countdown</Text>
             </Button>
             <View className="grid sm:grid-cols-2 gap-0">
               <View className="p-6">
                 <DateTimePicker
                   testID="dateTimePicker"
-                  value={new Date()}
+                  value={selectedDate}
                   // mode={"countdown"}
                   display="inline"
                   // is24Hour={true}
-                  // onChange={onChange}
+                  onChange={handleDateChange}
                 />
               </View>
               <View className="p-6 flex flex-col items-center justify-center gap-4">
