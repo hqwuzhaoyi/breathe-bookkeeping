@@ -31,7 +31,7 @@ export const EmojiSelector = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ["50%", "80%"], []);
+  const snapPoints = useMemo(() => ["65%", "80%"], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -93,7 +93,7 @@ export const EmojiSelector = () => {
                   // onChange={onChange}
                 />
               </View>
-              <View className="bg-muted p-6 flex flex-col items-center justify-center gap-4">
+              <View className="p-6 flex flex-col items-center justify-center gap-4">
                 <View className="grid gap-2 w-full">
                   <Text className="text-base text-primary font-medium">
                     设置倒计时
