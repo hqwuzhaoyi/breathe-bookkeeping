@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Dimensions, StyleSheet } from "react-native";
 import { foodEmojis } from "./foods";
 import { Card, CardTitle } from "../ui/card";
 import clsx from "clsx";
@@ -13,7 +13,8 @@ import { FlatList } from "react-native-gesture-handler";
 import { DatePicker } from "../ui/date-picker";
 import { Input } from "../ui/input";
 // import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-// import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Text } from "~/components/ui/text";
 
 const screenWidth = Dimensions.get("window").width;
 const numColumns = 4; // 每行四个
@@ -30,7 +31,7 @@ export const EmojiSelector = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
+  const snapPoints = useMemo(() => ["50%", "80%"], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -68,8 +69,8 @@ export const EmojiSelector = () => {
       </View>
 
       <View style={styles.sheetModalView}>
-        <Button onPress={handlePresentModalPress}>
-          <Text>打开 BottomSheetModal</Text>
+        <Button onPress={handlePresentModalPress} variant="default">
+          <Text>打开</Text>
         </Button>
         <BottomSheetModal
           ref={bottomSheetModalRef}
@@ -78,53 +79,36 @@ export const EmojiSelector = () => {
           onChange={handleSheetChanges}
         >
           <BottomSheetView style={styles.sheetModalContentContainer}>
+            <Button variant="default" size='lg' className="w-3/4">
+              <Text>Start Countdown</Text>
+            </Button>
             <View className="grid sm:grid-cols-2 gap-0">
-              <View className="bg-background p-6">
-                {/* <DateTimePicker
+              <View className="p-6">
+                <DateTimePicker
                   testID="dateTimePicker"
                   value={new Date()}
-                  mode={"date"}
-                  is24Hour={true}
+                  // mode={"countdown"}
+                  display="inline"
+                  // is24Hour={true}
                   // onChange={onChange}
-                /> */}
+                />
               </View>
               <View className="bg-muted p-6 flex flex-col items-center justify-center gap-4">
                 <View className="grid gap-2 w-full">
-                  <Text>Countdown (seconds)</Text>
-                  <Input
-                    placeholder="Write some stuff..."
-                    value={countDown.toString()}
-                    onChangeText={(text) => setCountDown(parseInt(text, 10))}
-                    keyboardType="number-pad"
-                    // style={styles.inputNumber}
-                    className="w-1/2 bg-secondary rounded-md px-4 py-2 mt-2"
-                  />
+                  <Text className="text-base text-primary font-medium">
+                    设置倒计时
+                  </Text>
+                  <View className="flex flex-row gap-2 justify-between items-center">
+                    <Input
+                      placeholder="请填写天数"
+                      value={countDown.toString()}
+                      onChangeText={(text) => setCountDown(parseInt(text, 10))}
+                      keyboardType="number-pad"
+                      // style={styles.inputNumber}
+                      className="w-1/2 bg-secondary rounded-md px-4 py-2 mt-2"
+                    />
+                  </View>
                 </View>
-                <Button size="lg" variant="default">
-                  Start Countdown
-                </Button>
-              </View>
-            </View>
-            <View className="flex flex-row items-center gap-2">
-              <View className="flex-1">
-                <DatePicker
-                  value={new Date()}
-                  onChange={(event, selectedDate) => {
-                    console.log("selectedDate", selectedDate);
-                  }}
-                  className="bg-secondary  border-none rounded-md px-4 py-2 mt-2"
-                />
-              </View>
-              <Text>或者</Text>
-              <View>
-                <Input
-                  placeholder="Write some stuff..."
-                  value={countDown.toString()}
-                  onChangeText={(text) => setCountDown(parseInt(text, 10))}
-                  keyboardType="number-pad"
-                  // style={styles.inputNumber}
-                  className="w-1/2 bg-secondary  border-none rounded-md px-4 py-2 mt-2 focus-visible:!shadow-none"
-                />
               </View>
             </View>
           </BottomSheetView>
