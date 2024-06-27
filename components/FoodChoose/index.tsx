@@ -33,6 +33,7 @@ export const EmojiSelector = ({
 }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [countDown, setCountDown] = useState(7);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -69,21 +70,38 @@ export const EmojiSelector = ({
           <Text> {item.emoji}</Text>
         </View>
       </Card>
-      <CardTitle className="text-xs text-center  pt-2 flex-wrap w-16">{item.name}</CardTitle>
+      <CardTitle className="text-xs text-center  pt-2 flex-wrap w-16">
+        {item.name}
+      </CardTitle>
     </View>
   );
+
+  const filteredFoods = useMemo(() => {
+    return foodEmojis.filter((food) =>
+      food.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm]);
 
   return (
     <BottomSheetModalProvider>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.centerContainer}>
-          <FlatList
-            data={foodEmojis}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            numColumns={numColumns}
-            style={styles.list}
+          <Input
+            onChangeText={setSearchTerm}
+            value={searchTerm}
+            placeholder="搜索食物..."
+            clearButtonMode="while-editing"
+            className="w-full bg-secondary rounded-md px-4 py-2 mt-2"
           />
+          <View className="flex-1">
+            <FlatList
+              data={filteredFoods}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+              numColumns={numColumns}
+              style={styles.list}
+            />
+          </View>
           <Button
             onPress={handlePresentModalPress}
             variant="default"
