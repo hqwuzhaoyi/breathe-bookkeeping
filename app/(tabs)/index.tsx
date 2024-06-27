@@ -1,116 +1,127 @@
-import * as React from "react";
-import { View } from "react-native";
-import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  LayoutAnimationConfig,
-} from "react-native-reanimated";
-import { Info } from "~/components/Icons";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { View, StyleSheet } from "react-native";
+import useAudioRecorder from "~/hook/useAudioRecorder";
+import ExpenseCard from "~/components/ExpenseCard";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Progress } from "~/components/ui/progress";
 import { Text } from "~/components/ui/text";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Mic, Pause } from "lucide-react-native";
+import { useState } from "react";
+import clsx from "clsx";
+import MyBottomSheet from "~/components/ui/bottom-sheet";
+import { Link } from "expo-router";
+import { router } from "expo-router";
 
-const GITHUB_AVATAR_URI =
-  "https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
+const openAIEndpoint = "https://api.openai.com/v1/audio/transcriptions";
+const apiKey = process.env.EXPO_PUBLIC_OPEN_API_TOKEN;
 
-export default function Screen() {
-  const [progress, setProgress] = React.useState(78);
+export default function Record() {
+  const [isRecording, setIsRecording] = useState(false);
+  const { startRecording, stopRecording, playSound, recordURI } =
+    useAudioRecorder({ openAIEndpoint, apiKey });
+  const [isVisible, setIsVisible] = useState(false);
 
-  function updateProgressValue() {
-    setProgress(Math.floor(Math.random() * 100));
-  }
   return (
-    <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
-      <Card className="w-full max-w-sm p-6 rounded-2xl">
-        <CardHeader className="items-center">
-          <Avatar alt="Rick Sanchez's Avatar" className="w-24 h-24">
-            <AvatarImage source={{ uri: GITHUB_AVATAR_URI }} />
-            <AvatarFallback>
-              <Text>RS</Text>
-            </AvatarFallback>
-          </Avatar>
-          <View className="p-3" />
-          <CardTitle className="pb-2 text-center">Rick Sanchez</CardTitle>
-
-          <View className="flex-row">
-            <CardDescription className="text-base font-semibold">
-              Scientist
-            </CardDescription>
-            <Tooltip delayDuration={150}>
-              <TooltipTrigger className="px-2 pb-0.5 active:opacity-50">
-                <Info
-                  size={14}
-                  strokeWidth={2.5}
-                  className="w-4 h-4 text-foreground/70"
-                />
-              </TooltipTrigger>
-              <TooltipContent className="py-2 px-4 shadow">
-                <Text className="native:text-lg">Freelance</Text>
-              </TooltipContent>
-            </Tooltip>
-          </View>
-        </CardHeader>
-        <CardContent>
-          <View className="flex-row justify-around gap-3">
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Dimension</Text>
-              <Text className="text-xl font-semibold">C-137</Text>
-            </View>
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Age</Text>
-              <Text className="text-xl font-semibold">70</Text>
-            </View>
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Species</Text>
-              <Text className="text-xl font-semibold">Human</Text>
-            </View>
-          </View>
-        </CardContent>
-        <CardFooter className="flex-col gap-3 pb-0">
-          <View className="flex-row items-center overflow-hidden">
-            <Text className="text-sm text-muted-foreground">Productivity:</Text>
-            <LayoutAnimationConfig skipEntering>
-              <Animated.View
-                key={progress}
-                entering={FadeInUp}
-                exiting={FadeOutDown}
-                className="w-11 items-center"
-              >
-                <Text className="text-sm font-bold text-sky-600">
-                  {progress}%
-                </Text>
-              </Animated.View>
-            </LayoutAnimationConfig>
-          </View>
-          <Progress
-            value={progress}
-            className="h-2"
-            indicatorClassName="bg-sky-600"
-          />
-          <View />
-          <Button
-            variant="outline"
-            className="shadow shadow-foreground/5"
-            onPress={updateProgressValue}
-          >
-            <Text>Update</Text>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <View className="p-4">
+        <Button
+          onPress={stopRecording}
+          variant="outline"
+          className="shadow shadow-foreground/5"
+        >
+          <Text>Stop Recording</Text>
+        </Button>
+        {recordURI && (
+          <Button onPress={() => playSound(recordURI)}>
+            <Text>Play Sound</Text>
           </Button>
-        </CardFooter>
-      </Card>
-    </View>
+        )}
+        <View className="flex flex-col gap-4 py-4">
+          {[1, 2, 3].map((_, index) => (
+            <ExpenseCard
+              key={index}
+              onPress={() => {
+                router.push("/modal");
+              }}
+            />
+          ))}
+        </View>
+        <Button
+          onPress={() => {
+            // setIsVisible(true);
+            router.push("/modal");
+          }}
+          variant="default"
+        >
+          <Text>Present modal</Text>
+        </Button>
+      </View>
+
+      <MyBottomSheet
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}
+      />
+      <View className="absolute bottom-[8vh] right-6">
+        <Button
+          className={clsx(
+            "rounded-full p-3 shadow size-20 ",
+            isRecording && "bg-red-500"
+          )}
+          variant="outline"
+          onPress={() => {
+            if (isRecording) {
+              stopRecording();
+              setIsRecording(false);
+              return;
+            }
+            startRecording();
+            setIsRecording(true);
+          }}
+        >
+          {isRecording ? (
+            <Pause className="color-white" />
+          ) : (
+            <Mic className="color-white" />
+          )}
+        </Button>
+      </View>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1",
+    padding: 10,
+  },
+  separator: {
+    backgroundColor: "rgb(200, 199, 204)",
+    height: StyleSheet.hairlineWidth,
+  },
+  rectButton: {
+    flex: 1,
+    height: 80,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
+    flexDirection: "column",
+    backgroundColor: "white",
+  },
+  fromText: {
+    fontWeight: "bold",
+    backgroundColor: "transparent",
+  },
+  messageText: {
+    color: "#999",
+    backgroundColor: "transparent",
+  },
+  dateText: {
+    backgroundColor: "transparent",
+    position: "absolute",
+    right: 20,
+    top: 10,
+    color: "#999",
+    fontWeight: "bold",
+  },
+});
