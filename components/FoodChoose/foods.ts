@@ -1,10 +1,9 @@
-const foodEmojis = [
-  { emoji: "🍏", name: "Apple" },
-  { emoji: "🍎", name: "Red Apple" },
-  { emoji: "🍐", name: "Pear" },
-  { emoji: "🍊", name: "Orange" },
-  { emoji: "🍋", name: "Lemon" },
-  { emoji: "🍌", name: "Banana" },
-  // 添加更多食物 Emoji...
-];
+import emojis from "./emoji.json";
+
+const foodEmojis = emojis.emojis.map((emoji) => {
+  return {
+    name: emoji.name,
+    emoji: emoji.emoji,
+  };
+});
 export { foodEmojis };

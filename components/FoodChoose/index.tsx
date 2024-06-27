@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { View, Dimensions, StyleSheet } from "react-native";
+import { View, Dimensions, StyleSheet, SafeAreaView } from "react-native";
 import { foodEmojis } from "./foods";
 import { Card, CardTitle } from "../ui/card";
 import clsx from "clsx";
@@ -15,6 +15,7 @@ import { Input } from "../ui/input";
 // import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Text } from "~/components/ui/text";
+import { Save } from "lucide-react-native";
 
 const screenWidth = Dimensions.get("window").width;
 const numColumns = 4; // 每行四个
@@ -68,26 +69,33 @@ export const EmojiSelector = ({
           <Text> {item.emoji}</Text>
         </View>
       </Card>
-      <CardTitle className="text-xs text-center  pt-2">{item.name}</CardTitle>
+      <CardTitle className="text-xs text-center  pt-2 flex-wrap w-16">{item.name}</CardTitle>
     </View>
   );
 
   return (
     <BottomSheetModalProvider>
-      <View style={styles.centerContainer}>
-        <FlatList
-          data={foodEmojis}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={numColumns}
-          style={styles.list}
-        />
-      </View>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.centerContainer}>
+          <FlatList
+            data={foodEmojis}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={numColumns}
+            style={styles.list}
+          />
+          <Button
+            onPress={handlePresentModalPress}
+            variant="default"
+            size="lg"
+            className="w-full"
+          >
+            <Text>打开</Text>
+          </Button>
+        </View>
+      </SafeAreaView>
 
       <View style={styles.sheetModalView}>
-        <Button onPress={handlePresentModalPress} variant="default">
-          <Text>打开</Text>
-        </Button>
         <BottomSheetModal
           ref={bottomSheetModalRef}
           index={1}
@@ -143,9 +151,15 @@ export const EmojiSelector = ({
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // 使用 flex 1 来确保 SafeAreaView 填充整个屏幕
+  },
   centerContainer: {
     flex: 1,
-    alignItems: "center", // 确保 FlatList 在容器中水平居中
+    justifyContent: "center", // 确保 FlatList 在容器中垂直居中
+    alignItems: "center", // 确保 FlatList 在容器中水平居中'
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   list: {
     flexGrow: 0, // 防止 FlatList 填满整个容器
@@ -174,7 +188,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   sheetModalView: {
-    flex: 1,
+    // flex: 1,
+    // height: 100,
     justifyContent: "center",
     alignItems: "center",
   },

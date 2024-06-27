@@ -4,9 +4,22 @@ import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Card, CardDescription, CardTitle } from "~/components/ui/card";
 import Menu from "./ContextMenu";
+import * as emoji from "node-emoji";
+import { Text } from "../ui/text";
+import clsx from "clsx";
 
 function AppleIcon(props: React.JSX.IntrinsicAttributes & LucideProps) {
-  return <CherryIcon {...props} color={props.color ?? "black"} />;
+  const icon = emoji.find("apple");
+  return (
+    <View
+      className={clsx(
+        props.className,
+        "text-2xl flex justify-center items-center"
+      )}
+    >
+      <Text className="text-4xl">{icon?.emoji}</Text>
+    </View>
+  );
 }
 
 const ExpenseCard: React.FC<{
