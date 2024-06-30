@@ -4,7 +4,7 @@ import ExpenseCard from "~/components/ExpenseCard";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
-import { Mic, Pause } from "lucide-react-native";
+import { Mic, Pause } from "~/lib/icons";
 import { useState } from "react";
 import clsx from "clsx";
 import MyBottomSheet from "~/components/ui/bottom-sheet";
@@ -77,11 +77,13 @@ export default function Record() {
             setIsRecording(true);
           }}
         >
-          {isRecording ? (
-            <Pause className="color-white" />
-          ) : (
-            <Mic className="color-white" />
-          )}
+           <Text className="color-black">
+            {isRecording ? (
+              <Pause className="color-black" />
+            ) : (
+              <Mic className="color-black" />
+            )}
+          </Text>
         </Button>
       </View>
     </GestureHandlerRootView>
