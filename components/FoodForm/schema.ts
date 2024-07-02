@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const FoodPreservationCard = z.object({
+export const FoodPreservationCard = z.object({
   name: z.string(),
   expirationDate: z.date(),
   purchaseDate: z.date(),
