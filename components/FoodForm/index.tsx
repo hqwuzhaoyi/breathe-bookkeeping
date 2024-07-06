@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   TextInput,
   View,
-  Button,
   Text,
   StyleSheet,
   Platform,
@@ -14,6 +13,7 @@ import { FoodPreservationCard, FoodPreservationCardType } from "./schema";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { FormItem } from "./FormItem";
+import { Button } from "~/components/ui/button";
 
 const FoodPreservationForm = () => {
   const {
@@ -102,6 +102,14 @@ const FoodPreservationForm = () => {
           />
         )}
       /> */}
+      <Button
+        onPress={() => {
+          console.log("Icon");
+        }}
+        variant="default"
+      >
+        <Text>Icon</Text>
+      </Button>
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
