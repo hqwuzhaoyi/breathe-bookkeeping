@@ -1,13 +1,7 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  TextInput,
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-} from "react-native";
+import { TextInput, View, Text, StyleSheet, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FoodPreservationCard, FoodPreservationCardType } from "./schema";
 import { Label } from "../ui/label";
@@ -111,7 +105,9 @@ const FoodPreservationForm = () => {
         <Text>Icon</Text>
       </Button>
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <Button variant="default" onPress={handleSubmit(onSubmit)}>
+        <Text>Submit</Text>
+      </Button>
     </View>
   );
 };
