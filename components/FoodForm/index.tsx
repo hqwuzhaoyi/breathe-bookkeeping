@@ -100,7 +100,7 @@ const FoodPreservationForm = () => {
         onPress={() => {
           console.log("Icon");
         }}
-        variant="default"
+        variant="outline"
       >
         <Text>Icon</Text>
       </Button>
