@@ -6,14 +6,16 @@ export const FormItem = ({
   label,
   children,
 }: {
-  label: string;
+  label?: string;
   children: React.ReactNode;
 }) => {
   return (
     <View style={styles.formItem}>
-      <Label style={styles.label} nativeID={label}>
-        {label}
-      </Label>
+      {label && (
+        <Label style={styles.label} nativeID={label}>
+          {label}
+        </Label>
+      )}
       <View style={styles.input}>{children}</View>
     </View>
   );

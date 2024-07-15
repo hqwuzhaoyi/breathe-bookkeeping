@@ -1,13 +1,14 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TextInput, View, Text, StyleSheet, Platform } from "react-native";
+import { TextInput, View, StyleSheet, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { FoodPreservationCard, FoodPreservationCardType } from "./schema";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { FormItem } from "./FormItem";
 import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
 
 const FoodPreservationForm = () => {
   const {
@@ -24,20 +25,34 @@ const FoodPreservationForm = () => {
 
   return (
     <View style={styles.container}>
-      <FormItem label="Food">
-        <Controller
-          control={control}
-          name="name"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              className="w-full"
+      <View className="flex flex-row items-center gap-4">
+        <View className="flex w-[250px]">
+          <FormItem>
+            <Controller
+              control={control}
+              name="name"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  className="w-full"
+                  placeholder="名称"
+                />
+              )}
             />
-          )}
-        />
-      </FormItem>
+          </FormItem>
+        </View>
+        <Button
+          onPress={() => {
+            console.log("Icon");
+          }}
+          variant="default"
+
+        >
+          <Text>Icon</Text>
+        </Button>
+      </View>
 
       <FormItem label="expirationDate">
         <Controller
@@ -96,14 +111,6 @@ const FoodPreservationForm = () => {
           />
         )}
       /> */}
-      <Button
-        onPress={() => {
-          console.log("Icon");
-        }}
-        variant="outline"
-      >
-        <Text>Icon</Text>
-      </Button>
 
       <Button variant="default" onPress={handleSubmit(onSubmit)}>
         <Text>Submit</Text>
