@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { EmojiSelector } from "~/components/FoodChoose";
+import { EmojiSelector } from "~/components/EmojiSelector";
 import FoodPreservationForm from "~/components/FoodForm";
 
 export default function Modal() {
@@ -13,8 +13,11 @@ export default function Modal() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <FoodPreservationForm />
-
+        <EmojiSelector
+          onConfirm={(emoji) => {
+            console.log(emoji);
+          }}
+        />
         <StatusBar style="light" />
       </View>
     </GestureHandlerRootView>

@@ -9,6 +9,7 @@ import { Input } from "../ui/input";
 import { FormItem } from "./FormItem";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
+import { EmojiSelector } from "../EmojiSelector";
 
 const FoodPreservationForm = () => {
   const {
@@ -43,15 +44,11 @@ const FoodPreservationForm = () => {
             />
           </FormItem>
         </View>
-        <Button
-          onPress={() => {
-            console.log("Icon");
+        <EmojiSelector
+          onConfirm={(emoji) => {
+            console.log(emoji);
           }}
-          variant="default"
-
-        >
-          <Text>Icon</Text>
-        </Button>
+        />
       </View>
 
       <FormItem label="expirationDate">
